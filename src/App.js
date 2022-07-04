@@ -32,13 +32,13 @@ function App() {
         name="pizzaOrder"
         method="post"
         onSubmit={handleSubmit}
-        data-netlify-honeypot="bot-field"
       >
+        <input type="hidden" name="form-name" value="pizzaOrder"></input> 
         <label>
           What order did the pizza give to the pineapple?
           <input name="order" type="text" onChange={handleChange} />
         </label>
-        <input type="submit" />
+        <input name="input" type="submit" />
       </form>
     </div>
   );
