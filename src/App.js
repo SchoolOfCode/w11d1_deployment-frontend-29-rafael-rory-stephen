@@ -1,25 +1,51 @@
-import logo from "./logo.svg";
-import "./App.css";
+import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [input, setInput] = useState({});
+  const encode = (data) => {
+    return Object.keys(data)
+      .map(
+        (key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])
+      )
+      .join('&');
+  };
+
+  const handleSubmit = (e) => {
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({ 'form-name': 'contact', ...input }),
+    })
+      .then(() => alert('Success!'))
+      .catch((error) => alert(error));
+
+    e.preventDefault();
+  };
+
+  const handleChange = (e) => setInput({ [e.target.name]: e.target.value });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>Hello World! Trios</p>
-        <p>Deployment test</p>
-      </header>
+      <form
+        data-netlify="true"
+        name="pizzaOrder"
+        method="post"
+        onSubmit={handleSubmit}
+        data-netlify-honeypot="bot-field"
+      >
+        <input
+          type="hidden"
+          name="form-name"
+          value="pizzaOrder"
+          onChange={handleChange}
+        />
+        <label>
+          What order did the pizza give to the pineapple?
+          <input name="order" type="text" onChange={handleChange} />
+        </label>
+        <input type="submit" />
+      </form>
     </div>
   );
 }
