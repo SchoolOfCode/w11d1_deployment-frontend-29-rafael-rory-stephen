@@ -15,7 +15,7 @@ function App() {
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({ 'form-name': 'contact', ...input }),
+      body: encode({ 'form-name': 'test', ...input }),
     })
       .then(() => alert('Success!'))
       .catch((error) => alert(error));
@@ -34,12 +34,6 @@ function App() {
         onSubmit={handleSubmit}
         data-netlify-honeypot="bot-field"
       >
-        <input
-          type="hidden"
-          name="form-name"
-          value="pizzaOrder"
-          onChange={handleChange}
-        />
         <label>
           What order did the pizza give to the pineapple?
           <input name="order" type="text" onChange={handleChange} />
